@@ -3,13 +3,34 @@ import React from "react";
 import { useState } from "react";
 
 export const App = () => {
+  const [todoText, setTodoText] = useState("");
   const [incompleteTodos, setIncompleteTodos] = useState(["リスト", "リスト2"]);
   const [completeTodos, setCompleteTodos] = useState(["リスト3"]);
+
+  const onChangeTodoText = (e) => {
+    setTodoText(e.target.value);
+  };
+
+  const onClickAdd = () => {
+    if (todoText === "") return;
+    const newTodos = [...incompleteTodos, todoText];
+    setIncompleteTodos(newTodos);
+    setTodoText("");
+  };
+
+  const onClickDelete = () => {
+    alert("");
+  };
+
   return (
     <>
       <div className="input-area">
-        <input placeholder="TODOを入力" />
-        <button>追加</button>
+        <input
+          placeholder="TODOを入力"
+          value={todoText}
+          onChange={onChangeTodoText}
+        />
+        <button onClick={onClickAdd}>追加</button>
       </div>
 
       <div className="incomplete-area">
@@ -20,7 +41,7 @@ export const App = () => {
               <li key={todo} className="list">
                 <p>{todo}</p>
                 <button>完了</button>
-                <button>削除</button>
+                <button onClick={onClickDelete}>削除</button>
               </li>
             );
           })}
